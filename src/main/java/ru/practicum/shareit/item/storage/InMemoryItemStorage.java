@@ -12,6 +12,7 @@ import java.util.Map;
 public class InMemoryItemStorage implements ItemStorage {
     private final Map<Long, Item> items = new HashMap<>();
     private Long itemId = 0L;
+
     @Override
     public Item createItem(Item item) {
             item.setId(++itemId);
