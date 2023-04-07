@@ -18,6 +18,7 @@ import java.util.List;
 @RequestMapping("/items")
 public class ItemController {
     private final ItemService itemService;
+
     @Autowired
     public ItemController(ItemService itemService) {
         this.itemService = itemService;
@@ -28,6 +29,7 @@ public class ItemController {
                    @RequestBody @Valid ItemDto itemDto) {
         return itemService.createItem(userId, itemDto);
     }
+
     @PatchMapping("/{itemId}")
     ItemDto update(@NotBlank @RequestHeader("X-Sharer-User-Id") long userId,
                    @PathVariable long itemId,

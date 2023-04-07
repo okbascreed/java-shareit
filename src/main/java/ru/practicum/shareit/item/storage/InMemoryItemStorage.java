@@ -18,15 +18,18 @@ public class InMemoryItemStorage implements ItemStorage {
             items.put(item.getId(), item);
             return item;
         }
+
     @Override
     public List<Item> getAllItems() {
         return new ArrayList<>(items.values());
     }
+
     @Override
     public Item updateItem(Item item) {
         items.put(item.getId(), item);
         return item;
     }
+
     @Override
     public Item getItemById(Long itemId) {
         return items.get(itemId);
