@@ -45,7 +45,6 @@ public class ItemController {
 
     @GetMapping()
     List<ItemDto> getAllItemsByUser(@NotBlank @RequestHeader("X-Sharer-User-Id") long userId) {
-        log.info("get all items from user id={}", userId);
         return itemService.getAllItemsByUserId(userId);
     }
 

@@ -2,7 +2,6 @@ package ru.practicum.shareit.item.storage;
 
 import org.springframework.stereotype.Component;
 import ru.practicum.shareit.item.model.Item;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,11 +10,7 @@ import java.util.Map;
 @Component
 public class InMemoryItemStorage implements ItemStorage {
 
-
-
     private final Map<Long, Item> items = new HashMap<>();
-
-
 
     private long itemId = 0L;
 
