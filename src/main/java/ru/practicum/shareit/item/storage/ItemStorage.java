@@ -5,6 +5,7 @@ import ru.practicum.shareit.item.model.Item;
 import java.util.List;
 
 public interface ItemStorage {
+
     Item createItem(Item item);
 
     List<Item> getAllItems();
