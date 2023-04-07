@@ -9,7 +9,6 @@ import java.util.Map;
 
 @Component
 public class InMemoryItemStorage implements ItemStorage {
-
     private final Map<Long, Item> items = new HashMap<>();
 
     private long itemId = 0L;
