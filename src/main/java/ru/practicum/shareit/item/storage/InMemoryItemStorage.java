@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class InMemoryItemStorage implements ItemStorage{
+public class InMemoryItemStorage implements ItemStorage {
     private final Map<Long, Item> items = new HashMap<>();
     private Long itemId = 0L;
     @Override
@@ -22,13 +22,11 @@ public class InMemoryItemStorage implements ItemStorage{
     public List<Item> getAllItems() {
         return new ArrayList<>(items.values());
     }
-
     @Override
     public Item updateItem(Item item) {
         items.put(item.getId(), item);
         return item;
     }
-
     @Override
     public Item getItemById(Long itemId) {
         return items.get(itemId);

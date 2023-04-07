@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ItemServiceImpl implements ItemService{
+public class ItemServiceImpl implements ItemService {
     private final ItemStorage itemStorage;
     private final UserStorage userStorage;
 
@@ -53,17 +53,17 @@ public class ItemServiceImpl implements ItemService{
             throw new NotFoundException("Пользователь с таким id не найден.");
         }
         Item item = itemStorage.getItemById(itemId);
-        if(itemStorage.getItemById(itemId).getOwner().getId().equals(userId)){
-            if(itemDto.getName() != null){
+        if (itemStorage.getItemById(itemId).getOwner().getId().equals(userId)){
+            if (itemDto.getName() != null){
                 item.setName(itemDto.getName());
             }
-            if(itemDto.getDescription() != null){
+            if (itemDto.getDescription() != null){
                 item.setDescription(itemDto.getDescription());
             }
-            if(itemDto.getAvailable() !=null){
+            if (itemDto.getAvailable() != null){
                 item.setAvailable(itemDto.getAvailable());
             }
-            if(itemDto.getRequest() != null){
+            if (itemDto.getRequest() != null){
                 item.setRequest(itemDto.getRequest());
             }
         } else {
