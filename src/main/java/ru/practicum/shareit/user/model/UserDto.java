@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 
 @Data
 @Builder
@@ -15,5 +16,6 @@ public class UserDto {
     private String name;
 
     @Email
+    @Size(min = 1, max = 20)
     private String email;
 }

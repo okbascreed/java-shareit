@@ -23,7 +23,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto createUser(UserDto userDto) {
-        userValidation(userDto);
         userEmailDuplicationCheck(userDto);
         User user = userStorage.createUser(UserMapper.mapToUser(userDto));
         return UserMapper.mapToUserDto(user);
@@ -67,13 +66,10 @@ public class UserServiceImpl implements UserService {
         userStorage.deleteUser(userId);
     }
 
-    private void userValidation(UserDto userDto) {
-        if (userDto.getName() == null || userDto.getEmail() == null) {
-            throw new UserValidationException("Имя пользователя и электронная почта не может быть null!");
-        }
-    }
-
     private void userEmailDuplicationCheck(UserDto userDto) {
+        if(userDto.getEmail() == null) {
+            throw new UserValidationException("Электронная почта не может быть null!");
+        }
         if (userStorage.getAllUsers()
                 .stream()
                 .anyMatch(user -> user.getEmail().equals(userDto.getEmail()))) {
