@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private void userEmailDuplicationCheck(UserDto userDto) {
-        if(userDto.getEmail() == null) {
+        if (userDto.getEmail() == null) {
             throw new UserValidationException("Электронная почта не может быть null!");
         }
         if (userStorage.getAllUsers()
