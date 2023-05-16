@@ -14,10 +14,14 @@ import ru.practicum.shareit.enums.BookingStatus;
 import ru.practicum.shareit.exception.InvalidEntityException;
 import ru.practicum.shareit.exception.ObjectNotFoundException;
 import ru.practicum.shareit.exception.UnknownBookingState;
+import ru.practicum.shareit.item.mapper.ItemMapper;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.repository.ItemJpaRepository;
+import ru.practicum.shareit.item.service.ItemService;
+import ru.practicum.shareit.user.mapper.UserMapper;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.repository.UserJpaRepository;
+import ru.practicum.shareit.user.service.UserService;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -34,16 +38,22 @@ public class BookingService {
     private static final String BOOKING_STATE_ERROR = "Unknown booking state.";
 
     private final BookingRepository repository;
-    private final UserJpaRepository userRepository;
     private final ItemJpaRepository itemRepository;
+    private final UserJpaRepository userRepository;
+    private final UserService userService;
+    private final ItemService itemService;
 
     @Autowired
     public BookingService(BookingRepository repository,
+                          ItemJpaRepository itemRepository,
                           UserJpaRepository userRepository,
-                          ItemJpaRepository itemRepository) {
+                          UserService userService,
+                          ItemService itemService) {
         this.repository = repository;
-        this.userRepository = userRepository;
         this.itemRepository = itemRepository;
+        this.userRepository = userRepository;
+        this.userService = userService;
+        this.itemService = itemService;
     }
 
     public BookingInfoDto addBooking(Long userId, BookingDto bookingDto) {
@@ -60,9 +70,8 @@ public class BookingService {
             throw new InvalidEntityException(ITEM_ERROR);
         }
 
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ObjectNotFoundException(USER_ERROR));
 
+        User user = userRepository.findById(userId).orElseThrow(() -> new ObjectNotFoundException(USER_ERROR));
         if (user.getId().equals(item.getOwner().getId())) {
             throw new ObjectNotFoundException(USER_ERROR);
         }
@@ -71,6 +80,7 @@ public class BookingService {
         booking.setStatus(BookingStatus.WAITING);
 
         return BookingMapper.toBookingInfoDto(repository.save(booking));
+
     }
 
     public BookingInfoDto updateBookingStatus(Long userId, Long bookingId, Boolean approved) {
@@ -79,8 +89,7 @@ public class BookingService {
                 .orElseThrow(() ->
                         new ObjectNotFoundException(BOOKING_ERROR));
 
-        User user = userRepository.findById(userId).orElseThrow(() ->
-                new ObjectNotFoundException(USER_ERROR));
+        User user = UserMapper.toUser(userService.getUser(userId));
 
         Item item = booking.getItem();
 
@@ -118,8 +127,8 @@ public class BookingService {
         Sort sort = Sort.by(Sort.Direction.DESC, "start");
         List<Booking> bookingList = new ArrayList<>();
 
-        User user = userRepository.findById(userId).orElseThrow(()
-                -> new ObjectNotFoundException(USER_ERROR));
+        User user = UserMapper.toUser(userService.getUser(userId));
+
 
         switch (bookingState) {
             case ALL:
@@ -156,8 +165,8 @@ public class BookingService {
         Sort sort = Sort.by(Sort.Direction.DESC, "start");
         List<Booking> bookingList = new ArrayList<>();
 
-        User user = userRepository.findById(userId).orElseThrow(() ->
-                new ObjectNotFoundException(USER_ERROR));
+        User user = UserMapper.toUser(userService.getUser(userId));
+
 
         switch (bookingState) {
             case ALL:

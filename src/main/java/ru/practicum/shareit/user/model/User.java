@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Builder
 @AllArgsConstructor
@@ -22,7 +23,7 @@ public class User {
     @Column
     private String name;
 
-    @Column(unique = true)
+    //@Column(unique = true)
     @NotBlank
     @Email
     private String email;

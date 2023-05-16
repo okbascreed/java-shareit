@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import ru.practicum.shareit.booking.dto.BookingItemDto;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @Builder
 public class ItemInfoDto {
     private Long id;
+    @NotNull
     private Long ownerId;
     private String name;
     private String description;

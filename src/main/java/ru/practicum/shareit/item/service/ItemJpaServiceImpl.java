@@ -20,6 +20,7 @@ import ru.practicum.shareit.item.repository.ItemJpaRepository;
 import ru.practicum.shareit.item.validator.ItemValidator;
 import ru.practicum.shareit.request.model.ItemRequest;
 import ru.practicum.shareit.user.repository.UserJpaRepository;
+import ru.practicum.shareit.user.service.UserService;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -42,6 +43,7 @@ public class ItemJpaServiceImpl implements ItemService {
         this.userRepository = userRepository;
         this.bookingRepository = bookingRepository;
         this.commentRepository = commentRepository;
+
     }
 
     @Override
@@ -59,7 +61,6 @@ public class ItemJpaServiceImpl implements ItemService {
                 .orElseThrow(() -> new ObjectNotFoundException("Item not found."));
 
         ItemInfoDto itemInfoDto = ItemMapper.toItemInfo(item);
-
         if (item.getOwner().getId().equals(userId)) {
             setBookingToItem(itemInfoDto);
         }
